@@ -124,8 +124,12 @@ If the user provides a rough request, make a reasonable first search rather than
    - 학력/희망연봉/상태/최근 업데이트: use only when relevant and visible
    - 제외 키워드: irrelevant roles, technologies, or employment patterns
 4. Collect a candidate pool from the visible result list, usually 20–100 candidates depending on the requested limit.
-5. For promising candidates, open the profile/resume detail page only if doing so does not trigger paid unlock/contact reveal/proposal send.
-6. Read currently visible masked/free sections only:
+5. First pass: collect a broad candidate pool from the result list.
+6. Second pass is mandatory before finalizing Top N: open the profile/resume detail page for each finalist candidate if doing so does not trigger paid unlock/contact reveal/proposal send.
+   - Do not finalize a Top N based on list rows only unless detail pages are inaccessible or paid-walled.
+   - If detail pages are inaccessible, state that the shortlist is `목록 기반 1차 shortlist` and lower confidence.
+   - If detail pages are accessible, state that the shortlist is `상세 이력 확인 기반 shortlist`.
+7. Read currently visible masked/free detail sections only:
    - role title and total experience
    - career timeline and responsibilities
    - project/product descriptions
@@ -134,9 +138,9 @@ If the user provides a rough request, make a reasonable first search rather than
    - education/certifications/languages if relevant
    - desired location/salary/job-seeking state if visible
    - recent update/activity signal
-7. Do not click paid unlock, contact reveal, proposal send, scrap, interest, memo, or state-change buttons unless the user explicitly instructs and confirms the side effect.
-8. Score and rank candidates.
-9. Return a shortlist with evidence, paid-unlock recommendation reasoning, and a direct candidate/profile URL for every listed candidate. Do not omit URLs unless the site truly exposes no stable link; if a URL is missing, mark it as `URL: 추출 실패` and explain why.
+8. Do not click paid unlock, contact reveal, proposal send, scrap, interest, memo, or state-change buttons unless the user explicitly instructs and confirms the side effect.
+9. Score and rank candidates.
+10. Return a shortlist with evidence, paid-unlock recommendation reasoning, source level, and a direct candidate/profile URL for every listed candidate. Do not omit URLs unless the site truly exposes no stable link; if a URL is missing, mark it as `URL: 추출 실패` and explain why.
 
 ## Browser extraction helper snippets
 
@@ -247,7 +251,7 @@ Return Korean output in this shape. URL is mandatory for every candidate in `유
 - Login required: open the Saramin talent-pool URL, show the Login bootstrap message, and ask the user to log in manually with a corporate account.
 - First-device verification required: Saramin may treat the agent-opened browser/profile as a new device and require 2FA. This is normal. Ask the user to complete verification manually and resume after confirmation.
 - Browser/session unavailable: do not silently switch to no-login scraping. Explain that accurate screening requires a browser session the agent can read/control, and ask the user to enable browser/computer-use capability or host-app permissions.
-- Paid unlock/contact wall: stop at the wall and do not click. Mark candidate as “needs HR paid review”.
+- Paid unlock/contact wall: stop at the wall and do not click. Mark candidate as “needs HR paid review”. If only list data was visible, explicitly label the result as list-based and do not claim detailed resume review.
 - Empty/too broad results: relax/tighten keyword, career, region, recent activity filters.
 - Bot/rate limit/403: pause, reduce request rate, or switch to manual browser workflow.
 - Upstream UI changed: rediscover the search form and visible data flow before updating instructions.
