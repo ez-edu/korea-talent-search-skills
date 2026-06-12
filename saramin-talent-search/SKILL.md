@@ -136,24 +136,29 @@ If the user provides a rough request, make a reasonable first search rather than
    - recent update/activity signal
 7. Do not click paid unlock, contact reveal, proposal send, scrap, interest, memo, or state-change buttons unless the user explicitly instructs and confirms the side effect.
 8. Score and rank candidates.
-9. Return a shortlist with evidence and paid-unlock recommendation reasoning.
+9. Return a shortlist with evidence, paid-unlock recommendation reasoning, and a direct candidate/profile URL for every listed candidate. Do not omit URLs unless the site truly exposes no stable link; if a URL is missing, mark it as `URL: 추출 실패` and explain why.
 
 ## Browser extraction helper snippets
 
-When using a browser-capable agent, after a search result page loads, extract candidate links and visible list text with a conservative DOM scan. Adjust selectors after observing the actual page.
+When using a browser-capable agent, after a search result page loads, extract candidate links and visible list text with a conservative DOM scan. Saramin may hide the obvious link text or use nested anchors/buttons, so always capture the nearest href, onclick/data attributes, and current detail-page URL. Adjust selectors after observing the actual page. The final answer must include one direct Saramin URL per recommended candidate whenever any link is available.
 
 ```javascript
-Array.from(document.querySelectorAll('a[href]'))
-  .map((a) => {
-    const href = a.getAttribute('href') || '';
-    const url = new URL(href, location.origin).href;
-    const isCandidate = /resume|talent|person|profile|applicant|pool/i.test(url + ' ' + a.innerText);
-    const card = a.closest('li, tr, article, section, .item, .card, .list, .row') || a.parentElement;
-    const text = (card?.innerText || a.innerText || '').replace(/\s+/g, ' ').trim();
-    return { url, text, isCandidate };
+Array.from(document.querySelectorAll('a[href], button, [onclick], [data-resume-sn], [data-resume-no], [data-mem-idx], [data-href], [data-url]'))
+  .map((el) => {
+    const rawHref = el.getAttribute('href') || el.getAttribute('data-href') || el.getAttribute('data-url') || '';
+    const onclick = el.getAttribute('onclick') || '';
+    const data = Object.fromEntries(Array.from(el.attributes || []).map((a) => [a.name, a.value]));
+    let url = rawHref ? new URL(rawHref, location.origin).href : '';
+    const urlLike = (onclick.match(/https?:\/\/[^'")\s]+|\/[^'")\s]+/g) || [])[0];
+    if (!url && urlLike) url = new URL(urlLike, location.origin).href;
+    const card = el.closest('li, tr, article, section, .item, .card, .list, .row, [class*=item], [class*=card], [class*=resume], [class*=talent]') || el.parentElement;
+    const text = (card?.innerText || el.innerText || '').replace(/\s+/g, ' ').trim();
+    const blob = [url, onclick, JSON.stringify(data), text].join(' ');
+    const isCandidate = /resume|talent|person|profile|applicant|pool|이력서|후보|인재/i.test(blob);
+    return { url, text, isCandidate, data, onclick };
   })
   .filter((item) => item.isCandidate && item.text.length > 20)
-  .filter((item, index, arr) => arr.findIndex((x) => x.url === item.url) === index)
+  .filter((item, index, arr) => (item.url || item.text) && arr.findIndex((x) => (x.url || x.text) === (item.url || item.text)) === index)
   .slice(0, 100);
 ```
 
@@ -204,7 +209,7 @@ Use labels:
 
 ## Output format
 
-Return Korean output in this shape:
+Return Korean output in this shape. URL is mandatory for every candidate in `유료 열람 추천 Top N`; if not available, write `URL: 추출 실패` and include the reason under `검색 한계`.
 
 ```text
 사람인 인재풀 shortlist
