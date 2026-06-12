@@ -14,7 +14,7 @@ saramin-talent-search
 Claude Code에 두 스킬을 한 번에 설치:
 
 ```bash
-npx skills add <owner>/korea-talent-search-skills --skill '*' --agent claude-code -y
+npx skills add https://github.com/ez-edu/korea-talent-search-skills.git --skill '*' --agent claude-code -y
 ```
 
 로컬 개발 버전 설치:
