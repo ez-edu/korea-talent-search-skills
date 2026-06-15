@@ -14,7 +14,9 @@ Use this skill when the user asks to:
 - 사람인 인재풀에서 우리 회사에 맞는 후보를 찾아달라고 요청한다.
 - 사람인 기업회원 로그인 세션에서 후보를 검색하고 shortlist를 만들고 싶어 한다.
 - 유료 열람/연락처 확인/제안 발송 전에 마스킹된 후보 정보를 비교하고 싶어 한다.
-- 특정 직무, 기술스택, 경력, 지역, 포트폴리오, 프로젝트 경험 조건으로 사람인 인재풀을 검색하려 한다.
+- 특정 직무, 경력, 지역, 포트폴리오, 프로젝트/성과 경험 조건으로 사람인 인재풀을 검색하려 한다.
+
+This skill is role-agnostic. It is not only for developers. Use it for sales, marketing, design, PM/PO, HR, finance, operations, manufacturing, legal/admin, customer success, data/AI, and other roles. Adapt the scoring rubric to the target role instead of forcing developer-oriented signals such as GitHub or technical stack.
 
 ## Core safety boundary
 
@@ -75,34 +77,26 @@ Do not request, read, store, or type the user's password, OTP, SMS code, email c
 Before searching, normalize the hiring requirements into this structure:
 
 ```yaml
-role_title: "백엔드 엔지니어"
+role_title: "채용하려는 직무명"
 must_have:
-  - Java
-  - Spring Boot
-  - AWS
+  - 반드시 필요한 경험/스킬/업종
 nice_to_have:
-  - Kafka
-  - Kubernetes
-  - high traffic service
+  - 있으면 좋은 경험/성과/툴
 negative_keywords:
-  - QA only
-  - SI maintenance only
+  - 제외할 업무/업종/경력 패턴
 career:
-  min_years: 4
-  max_years: 10
+  min_years: 0
+  max_years: 5
 location:
   work_area:
     - 서울
-    - 경기 성남
-portfolio_signals:
-  - GitHub
-  - production service
-  - traffic/scale metrics
+    - 경기
+evaluation_signals:
+  - 이 직무에서 높게 볼 성과/프로젝트/포트폴리오 근거
 company_context:
-  team: "B2B SaaS product team"
+  team: "채용 팀/조직"
   selling_points:
-    - product ownership
-    - technical growth
+    - 후보에게 어필할 포인트
 limit: 20
 ```
 
@@ -141,6 +135,31 @@ If the user provides a rough request, make a reasonable first search rather than
 8. Do not click paid unlock, contact reveal, proposal send, scrap, interest, memo, or state-change buttons unless the user explicitly instructs and confirms the side effect.
 9. Score and rank candidates.
 10. Return a shortlist with evidence, paid-unlock recommendation reasoning, source level, and a direct candidate/profile URL for every listed candidate. Do not omit URLs unless the site truly exposes no stable link; if a URL is missing, mark it as `URL: 추출 실패` and explain why.
+
+## Saramin search operation recipe
+
+Use this concrete sequence before asking the user for extra permission or clarification. The user already gave permission to perform read-only search and screening when they invoked this skill.
+
+1. Open the primary talent-pool URL.
+2. If login/2FA is required, pause for user login only. Do not ask for credentials.
+3. Once the search UI is visible, set filters in this order:
+   - Keyword/search box: combine `role_title` with 2–5 strongest must-have keywords. For non-developer roles, use role-specific terms such as `B2B영업`, `퍼포먼스마케팅`, `브랜드디자인`, `채용담당`, `회계`, `MD`, not developer terms.
+   - 직무/직종: choose the closest visible Saramin category. If an exact category is not visible, use keyword search first and continue.
+   - 경력: set min/max years if a career filter is visible.
+   - 지역: set preferred work areas if visible.
+   - 최근 업데이트/활동/정렬: prefer recently updated or relevance sorting when visible. If not visible, do not block.
+   - 제외 키워드: use only if the UI supports it; otherwise apply exclusions during scoring.
+4. Click the normal search/apply button or press Enter in the search box.
+5. If a filter is hidden behind an expandable panel, expand it only when it is a read-only search/filter UI. Do not open paid product, contact reveal, proposal, scrap, memo, or account-setting flows.
+6. Collect a first-pass list from the results page.
+7. Open detail/profile pages for finalist candidates in the same browser session when this is a normal profile/resume link and not a paid unlock/contact/proposal action.
+8. If the UI blocks detail access or every detail link is paid-walled, report `목록 기반 1차 shortlist` instead of asking the user to approve paid actions.
+
+Permission prompt guidance:
+
+- Safe to proceed without repeated user confirmation: opening the Saramin search URL, typing search/filter text, pressing search/apply, scrolling result lists, opening normal candidate profile/detail links, reading currently visible masked/free text.
+- Must stop and ask/hand off: paid unlock, contact reveal, proposal/send, scrap/interest, memo/status changes, payment, credential/OTP/cookie handling.
+- If the host agent asks for permission for every browser action, explain once that the next actions are read-only search/filter/detail-read actions covered by this skill, then continue after approval. Do not ask the user to approve each candidate unless the action has side effects.
 
 ## Browser extraction helper snippets
 
@@ -190,6 +209,20 @@ If paidActionHints suggests paid unlock/contact reveal/proposal send or account 
 ## Scoring rubric
 
 Score each candidate out of 100. Adjust weights if the user provides a different priority.
+
+### Role-adaptive scoring notes
+
+Do not use developer-only criteria for every role. Adapt evidence to the target job:
+
+- Sales/customer success: revenue, pipeline, outbound/inbound, contract negotiation, CRM, industry/customer segment fit.
+- Marketing: ROAS/CAC/LTV, ad channels, GA4/CRM, campaign ownership, funnel/conversion improvement.
+- Design: portfolio, launched work, brand consistency, Figma/Adobe, UX process, collaboration with product/marketing.
+- PM/PO/planning: problem definition, roadmap, requirements, stakeholder alignment, metric improvement, launch ownership.
+- HR/recruiting: direct sourcing, hiring volume, interview process, offer/compensation, ATS, employer branding.
+- Finance/accounting: closing, tax, audit, cashflow, ERP, reporting, responsibility scope.
+- Operations/MD/SCM: sales/margin/inventory improvement, vendor negotiation, fulfillment/logistics KPIs, process improvement.
+- Developer/data/AI: implementation/project evidence, production operation, relevant stack, portfolio/GitHub/blog, scale/automation impact.
+
 
 - Must-have fit: 35
   - direct evidence of required skills, stack, or domain

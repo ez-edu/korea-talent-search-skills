@@ -192,6 +192,20 @@ If `paidActionHints` suggests paid unlock/contact reveal/proposal send, do not c
 
 Score each candidate out of 100. Adjust weights if the user provides a different priority.
 
+### Role-adaptive scoring notes
+
+Do not use developer-only criteria for every role. Adapt evidence to the target job:
+
+- Sales/customer success: revenue, pipeline, outbound/inbound, contract negotiation, CRM, industry/customer segment fit.
+- Marketing: ROAS/CAC/LTV, ad channels, GA4/CRM, campaign ownership, funnel/conversion improvement.
+- Design: portfolio, launched work, brand consistency, Figma/Adobe, UX process, collaboration with product/marketing.
+- PM/PO/planning: problem definition, roadmap, requirements, stakeholder alignment, metric improvement, launch ownership.
+- HR/recruiting: direct sourcing, hiring volume, interview process, offer/compensation, ATS, employer branding.
+- Finance/accounting: closing, tax, audit, cashflow, ERP, reporting, responsibility scope.
+- Operations/MD/SCM: sales/margin/inventory improvement, vendor negotiation, fulfillment/logistics KPIs, process improvement.
+- Developer/data/AI: implementation/project evidence, production operation, relevant stack, portfolio/GitHub/blog, scale/automation impact.
+
+
 - Must-have fit: 35
   - direct evidence of required skills, stack, or domain
 - Relevant career depth: 20

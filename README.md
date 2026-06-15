@@ -1,6 +1,6 @@
 # korea-talent-search-skills
 
-잡코리아와 사람인 인재검색을 한 번에 설치하기 위한 Vercel Agent Skills 묶음 저장소다.
+잡코리아와 사람인 인재검색을 한 번에 설치하기 위한 Vercel Agent Skills 묶음 저장소다. 개발자뿐 아니라 영업, 마케팅, 디자인, PM, HR, 재무, 운영 등 전 직무 인재검색에 사용할 수 있다.
 
 Windows 일반 직원도 따라할 수 있는 전체 설치/사용 가이드는 아래 문서를 본다.
 
@@ -52,6 +52,8 @@ docs/employee-claude-guide.md
 - Claude Code 확인/설치 방법
 - 두 스킬 한 번에 설치하는 명령
 - 잡코리아/사람인 검색 프롬프트 예시
+- 영업/마케팅/디자인/HR 등 비개발 직무 예시
+- 직무별 평가 기준
 - 로그인/2차 인증 처리 방법
 - Windows 브라우저 문제 해결
 - macOS 권한 문제 해결
