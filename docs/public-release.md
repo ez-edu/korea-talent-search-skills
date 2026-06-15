@@ -9,7 +9,7 @@
 공개 설치 명령:
 
 ```bash
-npx skills add ez-edu/korea-talent-search-skills --skill '*' --agent claude-code -y
+npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent claude-code -y
 ```
 
 설치 확인:
@@ -49,7 +49,7 @@ https://github.com/ez-edu/korea-talent-search-skills
 public 전환 후 README의 설치 명령은 아래처럼 실제 GitHub slug를 사용한다.
 
 ```bash
-npx skills add ez-edu/korea-talent-search-skills --skill '*' --agent claude-code -y
+npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent claude-code -y
 ```
 
 ## 기존 private repo를 public으로 만들기 싫은 경우
@@ -67,5 +67,5 @@ git push -u origin main
 직원/외부 사용자 설치 명령은 public repo slug로 바꾼다.
 
 ```bash
-npx skills add ez-edu/korea-talent-search-skills-public --skill '*' --agent claude-code -y
+npx --yes skills add ez-edu/korea-talent-search-skills-public --skill "*" --agent claude-code -y
 ```
