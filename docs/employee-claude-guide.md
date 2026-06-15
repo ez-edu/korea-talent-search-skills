@@ -16,25 +16,25 @@ saramin-talent-search
 
 ## 2. 설치
 
-### GitHub 배포 버전
+### GitHub public 배포 버전
 
-저장소 배포 후 아래 `<owner>`를 실제 GitHub 조직/계정으로 바꿔 실행한다.
-
-```bash
-npx skills add <owner>/korea-talent-search-skills --skill '*' --agent claude-code -y
-```
-
-예상 예시:
+저장소가 public이면 누구나 아래 명령으로 설치할 수 있다.
 
 ```bash
 npx skills add ez-edu/korea-talent-search-skills --skill '*' --agent claude-code -y
 ```
 
-저장소가 private이면 먼저 GitHub 인증을 확인한다.
+저장소가 아직 private이면 GitHub 접근 권한이 있는 사용자만 설치할 수 있다. 범용 배포를 하려면 저장소를 public으로 전환하거나 별도 public repo를 만든다. 자세한 체크리스트는 아래 문서를 본다.
+
+```text
+docs/public-release.md
+```
+
+private 상태에서 권한 문제를 확인하려면:
 
 ```bash
 gh auth status
-git ls-remote https://github.com/<owner>/korea-talent-search-skills.git
+git ls-remote https://github.com/ez-edu/korea-talent-search-skills.git
 ```
 
 ### 로컬 개발 버전
