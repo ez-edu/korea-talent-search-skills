@@ -17,7 +17,23 @@ saramin-talent-search
 
 ## 빠른 설치
 
-Node.js/npm/Claude Code가 이미 설치되어 있으면 Windows PowerShell, macOS Terminal 모두 아래 명령을 그대로 실행한다.
+Node.js/npm이 이미 설치되어 있으면 사용하는 에이전트에 맞춰 아래 명령을 실행한다.
+
+### Codex 사용자 권장
+
+인사 직원 PC에 Codex를 설치했다면 아래 명령을 사용한다.
+
+```bash
+npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent codex -g -y
+```
+
+설치 확인:
+
+```bash
+npx --yes skills list --agent codex -g
+```
+
+### Claude Code 사용자
 
 ```bash
 npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent claude-code -y
@@ -38,7 +54,7 @@ saramin-talent-search
 
 ## 처음 설치하는 직원
 
-Node.js, npm, Claude Code가 아직 설치되어 있지 않은 일반 직원은 먼저 아래 가이드를 본다. 가이드에는 Claude/Codex에게 필요한 프로그램 설치부터 스킬 설치까지 맡기는 복사/붙여넣기 프롬프트도 포함되어 있다.
+Node.js, npm, Codex/Claude Code가 아직 설치되어 있지 않은 일반 직원은 먼저 아래 가이드를 본다. 가이드에는 Claude/Codex에게 필요한 프로그램 설치부터 스킬 설치까지 맡기는 복사/붙여넣기 프롬프트도 포함되어 있다.
 
 ```text
 docs/employee-claude-guide.md
@@ -49,8 +65,8 @@ docs/employee-claude-guide.md
 - Windows PowerShell 여는 방법
 - Windows Node.js LTS 설치 방법
 - Git 설치가 필요한 경우
-- Claude Code 확인/설치 방법
-- Claude/Codex에게 Node.js, Git, Claude Code, 스킬 설치까지 맡기는 프롬프트
+- Codex 또는 Claude Code 확인/설치 방법
+- Codex/Claude에게 Node.js, Git, Codex/Claude Code, 스킬 설치까지 맡기는 프롬프트
 - 두 스킬 한 번에 설치하는 명령
 - 잡코리아/사람인 검색 프롬프트 예시
 - 영업/마케팅/디자인/HR 등 비개발 직무 예시
