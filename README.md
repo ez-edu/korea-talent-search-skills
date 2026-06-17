@@ -2,12 +2,6 @@
 
 잡코리아와 사람인 인재검색을 한 번에 설치하기 위한 Vercel Agent Skills 묶음 저장소다. 개발자뿐 아니라 영업, 마케팅, 디자인, PM, HR, 재무, 운영 등 전 직무 인재검색에 사용할 수 있다.
 
-Windows 일반 직원도 따라할 수 있는 전체 설치/사용 가이드는 아래 문서를 본다.
-
-```text
-docs/employee-claude-guide.md
-```
-
 포함 스킬:
 
 ```text
@@ -17,11 +11,7 @@ saramin-talent-search
 
 ## 빠른 설치
 
-Node.js/npm이 이미 설치되어 있으면 사용하는 에이전트에 맞춰 아래 명령을 실행한다.
-
-### Codex 사용자 권장
-
-인사 직원 PC에 Codex를 설치했다면 아래 명령을 사용한다.
+Codex 사용자 권장:
 
 ```bash
 npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent codex -g -y
@@ -33,7 +23,7 @@ npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent codex
 npx --yes skills list --agent codex -g
 ```
 
-### Claude Code 사용자
+Claude Code 사용자:
 
 ```bash
 npx --yes skills add ez-edu/korea-talent-search-skills --skill "*" --agent claude-code -y
@@ -52,29 +42,19 @@ jobkorea-talent-search
 saramin-talent-search
 ```
 
-## 처음 설치하는 직원
+## 직원용 문서
 
-Node.js, npm, Codex/Claude Code가 아직 설치되어 있지 않은 일반 직원은 먼저 아래 가이드를 본다. 가이드에는 Claude/Codex에게 필요한 프로그램 설치부터 스킬 설치까지 맡기는 복사/붙여넣기 프롬프트도 포함되어 있다.
+기본 사용 가이드:
 
 ```text
 docs/employee-claude-guide.md
 ```
 
-가이드에 포함된 내용:
+Windows 설치/문제해결이 필요할 때만 읽는 문서:
 
-- Windows PowerShell 여는 방법
-- Windows Node.js LTS 설치 방법
-- Git 설치가 필요한 경우
-- Codex 또는 Claude Code 확인/설치 방법
-- Codex/Claude에게 Node.js, Git, Codex/Claude Code, 스킬 설치까지 맡기는 프롬프트
-- 두 스킬 한 번에 설치하는 명령
-- 잡코리아/사람인 검색 프롬프트 예시
-- 영업/마케팅/디자인/HR 등 비개발 직무 예시
-- 직무별 평가 기준
-- 로그인/2차 인증 처리 방법
-- Windows 브라우저 문제 해결
-- macOS 권한 문제 해결
-- 보안/개인정보 주의사항
+```text
+docs/windows-codex-setup.md
+```
 
 ## 사용 예시
 
